@@ -806,6 +806,9 @@ function judgeInjectArraySuspect(path, ctx) {
         path.parentPath.scope.crawl();
         path.insertAfter(inject);
 
+    } else if (t.isCallExpression(node) && node.callee.name === '_createClass') {
+        const binding = path.scope.getBinding(node.arguments[0].name);
+        binding && !binding.path.$seen && judgeInjectArraySuspect(binding.path, ctx);
     } else if (path = followReference(path)) {
         // node was a reference and followed node now is either a
         // FunctionDeclaration or a VariableDeclarator

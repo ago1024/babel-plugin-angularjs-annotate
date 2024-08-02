@@ -222,6 +222,34 @@ module.exports = {
       });
     }
   }, {
+    name: "@babel/transform-classes@7.25.0 with property",
+    explicit: false,
+    input: function() {
+      let TestService = /*#__PURE__*/function () {
+        function TestService($routeProvider) {}
+        return _createClass(TestService, [{
+          key: "foo",
+          get: function () {
+            return 'foo';
+          }
+        }]);
+      }();
+      module.service('TestService', TestService);
+    },
+    expected: function() {
+      let TestService = /*#__PURE__*/function () {
+        TestService.$inject = ["$routeProvider"];
+        function TestService($routeProvider) {}
+        return _createClass(TestService, [{
+          key: "foo",
+          get: function () {
+            return 'foo';
+          }
+        }]);
+      }();
+      module.service('TestService', TestService);
+    },
+  }, {
     name: "JSDoc/NGDoc format with annotated class",
     explicit: true,
     noES5: false,
